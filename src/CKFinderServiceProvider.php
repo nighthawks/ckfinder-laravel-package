@@ -2,6 +2,7 @@
 
 namespace CKSource\CKFinderBridge;
 
+use Illuminate\Support\Facades\Auth;
 use CKSource\CKFinderBridge\Command\CKFinderDownloadCommand;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -44,6 +45,10 @@ class CKFinderServiceProvider extends ServiceProvider
                     "Please run `artisan vendor:publish --tag=ckfinder` command first."
                 );
             }
+            
+            $ckfinderConfig['authentication'] = function() {
+                return Auth::check();
+            };
 
             $ckfinder = new \CKSource\CKFinder\CKFinder($ckfinderConfig);
 
